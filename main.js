@@ -1,7 +1,14 @@
+//prevent the scrolling effect of touching 
+function preventDefault(e){
+    e.preventDefault();
+}
+document.body.addEventListener('touchmove', preventDefault, { passive: false });
+
 //setup common variable
 let width_capture_window = 200;
 let height_capture_window = 200;
-let img_background;
+let raw_imgdata;
+let captured_imgdata;
 let width_original_img;
 let height_original_img;
 let width_img_display = 800; //set fixed width for display
@@ -23,7 +30,7 @@ raw_img.onload = function(){
     c.width = width_img_display;
     c.height = height_img_display;
     ctx.drawImage(this,0,0,width_original_img,height_original_img,0,0,width_img_display,height_img_display);
-    img_background=ctx.getImageData(0,0,c.width,c.height);
+    raw_imgdata=ctx.getImageData(0,0,c.width,c.height);
    
   }
 
@@ -54,7 +61,7 @@ c.addEventListener('mousemove', function(event){
         let cRect = c.getBoundingClientRect()
         x = Math.round(event.clientX - cRect.left)
         y = Math.round(event.clientY - cRect.top)
-        ctx.putImageData(img_background,0,0);
+        ctx.putImageData(raw_imgdata,0,0);
         ctx.beginPath();
         ctx.rect(x-width_capture_window/2, y-height_capture_window/2, width_capture_window, height_capture_window);
         ctx.strokeStyle = "#77f022";
@@ -69,18 +76,24 @@ c.addEventListener('mousemove', function(event){
 
 c.addEventListener('click', function(event){
     captured = true;
+    let captured_c = document.getElementById("captured_img")
+    let captured_ctx = captured_c.getContext('2d');
+    captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);
 });
 
 //set up eventlistener to capture touch screen location
 
 let captured_c = document.getElementById("captured_img")
 captured_c.addEventListener('touchmove', function(event){
-    
-    let x = event.touches[0].clientX;
-    let y = event.touches[0].clientY;
+
+    let cRect = captured_c.getBoundingClientRect()
+    x = Math.round(event.touches[0].clientX - cRect.left)
+    y = Math.round(event.touches[0].clientY - cRect.top)
     let captured_ctx = captured_c.getContext('2d');
+    ctx.putImageData(captured_imgdata,0,0);
     captured_ctx.beginPath();
     captured_ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    captured_ctx.strokeStyle = "#77f022";
     captured_ctx.fill();
 });
 
