@@ -71,6 +71,20 @@ c.addEventListener('click', function(event){
     captured = true;
 });
 
+//set up eventlistener to capture touch screen location
+
+let captured_c = document.getElementById("captured_img")
+captured_c.addEventListener('touchmove', function(event){
+    
+    let x = event.touches[0].clientX;
+    let y = event.touches[0].clientY;
+    let captured_ctx = captured_c.getContext('2d');
+    captured_ctx.beginPath();
+    captured_ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    captured_ctx.fill();
+});
+
+
 //other functions
 function window_increase(){
     width_capture_window=width_capture_window*1.1;
