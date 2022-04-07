@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+      <!-- Bootstrap Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1" >
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <div class="d-flex justify-content-center mt-1">
+        <input id="load_img" type="file">
+    </div>  
+
+    <div class="d-flex justify-content-center mt-1">
+        <canvas id="raw_img" ></canvas>
+    </div>
+
+    <div class="d-flex justify-content-center mt-1">
+        <div class="d-flex align-items-center">
+            <span>Adjust window size</span>
+        </div>
+        <button id="btn_add" style="width:40px" class="btn btn-primary mx-1" onclick="window_increase()"><b>+</b></button>
+        <button id="btn_sub" style="width:40px" class="btn btn-primary mx-1" onclick="window_decrease()"><b>-</b></button>
+        <button id="btn_sub" class="btn btn-secondary mx-1" onclick="redo_capture()"><b>Redo</b></button>
+    </div>
+
+    <div class="d-flex justify-content-center mt-1">
+        <canvas id="captured_img" width="512", height="512" ></canvas>
+    </div>
+
+    <!---for bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!---javascript for entry-->
+    <script src="main.js"></script>
+</body>
