@@ -84,9 +84,10 @@ captured_c.addEventListener('touchmove', function(event){
     y = Math.round(event.touches[0].clientY - cRect.top)
     
     captured_ctx.putImageData(captured_imgdata,0,0);
-    captured_ctx.moveTo(x,y);
-    captured_ctx.lineTo(x+10+2,y+10-2);
-    captured_ctx.lineTo(x+10-2,y+10+2);
+    // captured_ctx.moveTo(x,y);
+    // captured_ctx.lineTo(x+10+2,y+10-2);
+    // captured_ctx.lineTo(x+10-2,y+10+2);
+    captured_ctx.arc(x, y, 10, 0, Math.PI*2),
     captured_ctx.fillStyle = "#77f022";
     captured_ctx.fill();
 });
