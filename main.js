@@ -50,13 +50,13 @@ file_name=files[0].name;
 
 //set up eventlistener to set up capture window size
 let c = document.getElementById("raw_img")
-c.addEventListener('mousemove', function(event){
+c.addEventListener('touchmove', function(event){
     if(captured == false){ //check wheather captured window has been clicked
         let c = document.getElementById("raw_img")
         let ctx = c.getContext('2d');
         let cRect = c.getBoundingClientRect()
-        x = Math.round(event.clientX - cRect.left)
-        y = Math.round(event.clientY - cRect.top)
+        x = Math.round(event.touches[0].clientX - cRect.left)
+        y = Math.round(event.touches[0].clientY - cRect.top)
         ctx.putImageData(raw_imgdata,0,0);
         ctx.beginPath();
         ctx.rect(x-width_capture_window/2, y-height_capture_window/2, width_capture_window, height_capture_window);
@@ -87,9 +87,10 @@ captured_c.addEventListener('touchmove', function(event){
     y = Math.round(event.touches[0].clientY - cRect.top)
     let captured_ctx = captured_c.getContext('2d');
     captured_ctx.putImageData(captured_imgdata,0,0);
-    captured_ctx.beginPath();
-    captured_ctx.arc(x, y, 10, 0, 2 * Math.PI);
-    captured_ctx.strokeStyle = "#77f022";
+    captured_ctx.moveTo(x,y);
+    captured_ctx.lineTo(x+10+2,y+10-2);
+    captured_ctx.lineTo(x+10-2,y+10+2);
+    captured_ctx.fillStyle = "#77f022";
     captured_ctx.fill();
 });
 
