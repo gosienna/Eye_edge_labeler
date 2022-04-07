@@ -1,8 +1,4 @@
-//prevent the scrolling effect of touching 
-function preventDefault(e){
-    e.preventDefault();
-}
-document.body.addEventListener('touchmove', preventDefault, { passive: false });
+
 
 //setup common variable
 let width_capture_window = 200;
@@ -90,7 +86,7 @@ captured_c.addEventListener('touchmove', function(event){
     x = Math.round(event.touches[0].clientX - cRect.left)
     y = Math.round(event.touches[0].clientY - cRect.top)
     let captured_ctx = captured_c.getContext('2d');
-    ctx.putImageData(captured_imgdata,0,0);
+    captured_ctx.putImageData(captured_imgdata,0,0);
     captured_ctx.beginPath();
     captured_ctx.arc(x, y, 10, 0, 2 * Math.PI);
     captured_ctx.strokeStyle = "#77f022";
@@ -111,4 +107,17 @@ function window_decrease(){
 
 function redo_capture(){
     captured = false;
+}
+
+
+//prevent the scrolling effect of touching 
+function preventDefault(e){
+    e.preventDefault();
+}
+function fix_page(){
+    document.body.addEventListener('touchmove', preventDefault, { passive: false });
+}
+
+function free_page(){
+    document.body.removeEventListener('touchmove', preventDefault, { passive: true });
 }
