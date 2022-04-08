@@ -210,19 +210,23 @@ function redo_capture(){
 
 }
 
-function save(){
+function save1(){
     let link = document.createElement('a');
     //download mask
     link.download = file_name+"_mask.jpg";
     link.href = mask_c.toDataURL()
     link.click();
+    link.delete;
+
+}
+function save2(){
+    let link = document.createElement('a');
     //download captured eye
     link.download = file_name+"_captured.jpg";
     link.href = captured_c.toDataURL()
     link.click();
     link.delete;
-  }
-
+}
 
 //prevent the scrolling effect of touching 
 function preventDefault(e){
