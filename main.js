@@ -213,11 +213,11 @@ function redo_capture(){
 function save(){
     let link = document.createElement('a');
     //download mask
-    link.download = file_name+"_mask.png";
+    link.download = file_name+"_mask.jpg";
     link.href = mask_c.toDataURL()
     link.click();
     //download captured eye
-    link.download = file_name+"_captured.png";
+    link.download = file_name+"_captured.jpg";
     link.href = captured_c.toDataURL()
     link.click();
     link.delete;
