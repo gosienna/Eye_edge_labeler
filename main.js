@@ -211,12 +211,8 @@ function redo_capture(){
 }
 
 function save1(){
-    let link = document.createElement('a');
-    //download mask
-    link.download = file_name+"_mask.jpg";
-    link.href = mask_c.toDataURL()
-    link.click();
-    link.delete;
+    let img = document.getElementById("result")
+    img.src = mask_c.toDataURL()
 
 }
 function save2(){
