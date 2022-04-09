@@ -28,16 +28,16 @@
             <button id="btn_sub" class="btn btn-primary  mx-1" onclick="fix_page()"><b>Fix page</b></button>
             <button id="btn_sub" class="btn btn-primary  mx-1" onclick="free_page()"><b>Free page</b></button>
             <button id="btn_sub" class="btn btn-secondary mx-1" onclick="redo_capture()"><b>Redo</b></button>
-            <button id="btn_sub" class="btn btn-primary  mx-1" onclick="save1()"><b>save mask</b></button>
-            <button id="btn_sub" class="btn btn-primary  mx-1" onclick="save2()"><b>save captured</b></button>
+            <button id="btn_sub" class="btn btn-primary  mx-1" onclick="save()"><b>save</b></button>
         </div>
 
         <div class="d-flex justify-content-center mt-1">
             <canvas id="captured_img" width="512", height="512" ></canvas>
             <canvas id="edge_mask" width="512", height="512" ></canvas>
         </div>
-        <div>
-            <img id="result"></img>
+        <div class="d-flex justify-content-center mt-1">
+            <img id="captured_result"></img>
+            <img id="mask_result"></img>
         </div>
     </div>  
   

@@ -210,18 +210,12 @@ function redo_capture(){
 
 }
 
-function save1(){
-    let img = document.getElementById("result")
-    img.src = mask_c.toDataURL()
+function save(){
+    let captured_result = document.getElementById("captured_result")
+    captured_result.src = captured_c.toDataURL()
+    let mask_img = document.getElementById("mask_result")
+    mask_result.src = mask_c.toDataURL()
 
-}
-function save2(){
-    let link = document.createElement('a');
-    //download captured eye
-    link.download = file_name+"_captured.jpg";
-    link.href = captured_c.toDataURL()
-    link.click();
-    link.delete;
 }
 
 //prevent the scrolling effect of touching 
