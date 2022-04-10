@@ -116,31 +116,34 @@ captured_c.addEventListener("touchstart",function(event){
 captured_c.addEventListener('touchmove', function(event){
 
     let cRect = captured_c.getBoundingClientRect()
-    x = Math.round(event.touches[0].clientX - cRect.left)
-    y = Math.round(event.touches[0].clientY - cRect.top)
-    //draw on captured image
-    captured_ctx.putImageData(new_captured_imgdata,0,0);
-    captured_ctx.beginPath();
-    captured_ctx.moveTo(old_x , old_y);
-    captured_ctx.lineTo(x,y);
-    captured_ctx.closePath();
-    captured_ctx.strokeStyle = "#77f022";
-    captured_ctx.stroke();
-    new_captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);//update image
+    if(event.touches[0].touchType === "stylus"){ //activate only it is from stylus touch
+        x = Math.round(event.touches[0].clientX - cRect.left)
+        y = Math.round(event.touches[0].clientY - cRect.top)
+        //draw on captured image
+        captured_ctx.putImageData(new_captured_imgdata,0,0);
+        captured_ctx.beginPath();
+        captured_ctx.moveTo(old_x , old_y);
+        captured_ctx.lineTo(x,y);
+        captured_ctx.closePath();
+        captured_ctx.strokeStyle = "#77f022";
+        captured_ctx.stroke();
+        new_captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);//update image
 
-    //draw on edge mask
-    //mask_ctx.putImageData(mask_imgdata,0,0);
-    mask_ctx.beginPath();
-    mask_ctx.moveTo(old_x , old_y);
-    mask_ctx.lineTo(x,y);
-    mask_ctx.closePath();
-    mask_ctx.strokeStyle = "white";
-    mask_ctx.stroke();
-    mask_imgdata = mask_ctx.getImageData(0,0,mask_c.width,mask_c.height);//update image
+        //draw on edge mask
+        //mask_ctx.putImageData(mask_imgdata,0,0);
+        mask_ctx.beginPath();
+        mask_ctx.moveTo(old_x , old_y);
+        mask_ctx.lineTo(x,y);
+        mask_ctx.closePath();
+        mask_ctx.strokeStyle = "white";
+        mask_ctx.stroke();
+        mask_imgdata = mask_ctx.getImageData(0,0,mask_c.width,mask_c.height);//update image
+        
+        //update point location
+        old_x = x;
+        old_y = y;
+    }
     
-    //update point location
-    old_x = x;
-    old_y = y;
 });
 
 
