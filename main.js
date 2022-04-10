@@ -6,6 +6,7 @@ let width_capture_window = 200;
 let height_capture_window = 200;
 let raw_imgdata;
 let captured_imgdata;
+let new_captured_imgdata;
 let mask_imgdata;
 let width_original_img;
 let height_original_img;
@@ -18,7 +19,6 @@ let captured_c = document.getElementById("captured_img")
 let captured_ctx = captured_c.getContext('2d');
 let mask_c= document.getElementById("edge_mask");
 let mask_ctx = mask_c.getContext('2d');
-
 
 //triger one: load sample eye image
 let raw_img = new Image(); //create image variable as the input
@@ -60,16 +60,18 @@ file_name=files[0].name;
 c.addEventListener('touchmove', function(event){
     if(captured == false){ //check wheather captured window has been clicked
         let cRect = c.getBoundingClientRect()
-        x = Math.round(event.touches[0].clientX - cRect.left)
-        y = Math.round(event.touches[0].clientY - cRect.top)
-        ctx.putImageData(raw_imgdata,0,0);
-        ctx.beginPath();
-        ctx.rect(x-width_capture_window/2, y-height_capture_window/2, width_capture_window, height_capture_window);
-        ctx.strokeStyle = "#77f022";
-        ctx.stroke();
-
-        let s = width_original_img / width_img_display; //ratio between
-        captured_ctx.drawImage(raw_img,x*s-s*width_capture_window/2,y*s-s*height_capture_window/2,s*width_capture_window,s*height_capture_window,0,0,512,512);
+        if(event.touches[0].touchType === "stylus"){
+            x = Math.round(event.touches[0].clientX - cRect.left)
+            y = Math.round(event.touches[0].clientY - cRect.top)
+            ctx.putImageData(raw_imgdata,0,0);
+            ctx.beginPath();
+            ctx.rect(x-width_capture_window/2, y-height_capture_window/2, width_capture_window, height_capture_window);
+            ctx.strokeStyle = "#77f022";
+            ctx.stroke();
+            let s = width_original_img / width_img_display; //ratio between
+            captured_ctx.drawImage(raw_img,x*s-s*width_capture_window/2,y*s-s*height_capture_window/2,s*width_capture_window,s*height_capture_window,0,0,512,512);
+    
+        }
     }
 });
 
@@ -94,6 +96,7 @@ c.addEventListener('mousemove', function(event){
 c.addEventListener('click', function(event){
     captured = true;
     captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);
+    new_captured_imgdata = captured_imgdata;
 });
 let old_x;
 let old_y;
@@ -116,14 +119,14 @@ captured_c.addEventListener('touchmove', function(event){
     x = Math.round(event.touches[0].clientX - cRect.left)
     y = Math.round(event.touches[0].clientY - cRect.top)
     //draw on captured image
-    captured_ctx.putImageData(captured_imgdata,0,0);
+    captured_ctx.putImageData(new_captured_imgdata,0,0);
     captured_ctx.beginPath();
     captured_ctx.moveTo(old_x , old_y);
     captured_ctx.lineTo(x,y);
     captured_ctx.closePath();
     captured_ctx.strokeStyle = "#77f022";
     captured_ctx.stroke();
-    captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);//update image
+    new_captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);//update image
 
     //draw on edge mask
     //mask_ctx.putImageData(mask_imgdata,0,0);
@@ -155,14 +158,14 @@ function mouseMoveFunction(event) {
     x = Math.round(event.clientX - cRect.left)
     y = Math.round(event.clientY - cRect.top)
     //draw on captured image
-    captured_ctx.putImageData(captured_imgdata,0,0);
+    captured_ctx.putImageData(new_captured_imgdata,0,0);
     captured_ctx.beginPath();
     captured_ctx.moveTo(old_x , old_y);
     captured_ctx.lineTo(x,y);
     captured_ctx.closePath();
     captured_ctx.strokeStyle = "#77f022";
     captured_ctx.stroke();
-    captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);//update image
+    new_captured_imgdata = captured_ctx.getImageData(0,0,captured_c.width,captured_c.height);//update image
 
     //draw on edge mask
     //mask_ctx.putImageData(mask_imgdata,0,0);
@@ -210,10 +213,22 @@ function redo_capture(){
 
 }
 
+function clear_mask(){
+    console.log('hi')
+    //clear the captured canvas
+    new_captured_imgdata = captured_imgdata;
+    captured_ctx.putImageData(new_captured_imgdata,0,0);
+    //clear the mask
+    mask_ctx.fillStyle = "black";
+    mask_ctx.fillRect(0, 0, 512, 512);
+    mask_imgdata = mask_ctx.getImageData(0,0,mask_c.width,mask_c.height);
+    
+}
+
 function save(){
     let captured_result = document.getElementById("captured_result")
     captured_result.src = captured_c.toDataURL()
-    let mask_img = document.getElementById("mask_result")
+    let mask_result = document.getElementById("mask_result")
     mask_result.src = mask_c.toDataURL()
 
 }
