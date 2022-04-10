@@ -230,6 +230,7 @@ function clear_mask(){
 
 function save(){
     let captured_result = document.getElementById("captured_result")
+    captured_ctx.putImageData(captured_imgdata,0,0);
     captured_result.src = captured_c.toDataURL()
     let mask_result = document.getElementById("mask_result")
     mask_result.src = mask_c.toDataURL()
